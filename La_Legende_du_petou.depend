@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1583086065 source:c:\users\h3ll0w0rld\documents\dev\c\la_legende_du_petou\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
+1583085792 c:\users\h3ll0w0rld\documents\dev\c\la_legende_du_petou\jeu.h
+
+1583085831 source:c:\users\h3ll0w0rld\documents\dev\c\la_legende_du_petou\jeu.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
+1583087051 source:c:\la_legende_du_petou\jeu.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
+1583098658 c:\la_legende_du_petou\jeu.h
+
+1583096279 source:c:\la_legende_du_petou\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
