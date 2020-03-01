@@ -11,8 +11,8 @@ typedef struct{
     int Niveau;
     int Exp;
     int Equipement[5];
-    int Coordonnee_X;
-    int Coordonnee_Y;
+    int X;
+    int Y;
 }Entity;
 
 #endif // STRUCT_H_INCLUDED
