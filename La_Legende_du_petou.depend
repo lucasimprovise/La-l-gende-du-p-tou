@@ -27,3 +27,21 @@
 	<windows.h>
 	"jeu.h"
 
+1583100160 source:c:\users\h3ll0w0rld\documents\dev\c\la-l-gende-du-p-tou\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
+1583102800 c:\users\h3ll0w0rld\documents\dev\c\la-l-gende-du-p-tou\jeu.h
+	"struct.h"
+
+1583102355 c:\users\h3ll0w0rld\documents\dev\c\la-l-gende-du-p-tou\struct.h
+
+1583102797 source:c:\users\h3ll0w0rld\documents\dev\c\la-l-gende-du-p-tou\jeu.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"struct.h"
+	"jeu.h"
+

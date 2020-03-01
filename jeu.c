@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include "struct.h"
 #include "jeu.h"
 
 void Color(int couleurDuTexte,int couleurDeFond){ // fonction d'affichage de couleurs
@@ -23,10 +24,11 @@ void menu_principal(){
         printf("Fait ton choix mon reuf: ");
         scanf("%i", &iChoix);
         switch(iChoix){
-            case 1: // Lancer le jeu
-                PERSONNAGE Personnage;
-                create_personnage(Personnage);
-                printf("%s",Personnage.Nom);
+            Entity Personnage;
+            case 1:// Lancer le jeu
+                system("cls");
+                create_personnage(&Personnage);
+                printf("\nVous vous appelez, %s\n\n",Personnage.Nom);
                 iChoix= 4;
                 break;
             case 2: // Charger la sauvegarde
@@ -43,11 +45,7 @@ void menu_principal(){
     }while(iChoix != 4);
 }
 
-
-void create_personnage(PERSONNAGE *Personnage){
-    Personnage.Nom = "Lucas";
-
-
+void create_personnage(Entity *Personnage){
+    printf("Quel est votre nom : ");
+    scanf("%s",(*Personnage).Nom);
 }
-
-
