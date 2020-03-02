@@ -65,7 +65,7 @@ void create_personnage(Entity *Personnage){
 void game(Entity *Personnage){
     char carte[20][20];
     create_carte(carte);
-    affichage_carte(carte,&Personnage);
+    affichage_carte(carte,&(*Personnage));
 }
 
 void create_carte(char (*carte)[20]){
@@ -84,20 +84,20 @@ void create_carte(char (*carte)[20]){
             }else{
                 carte[I][J]=' ';
             }
-            J+1;
+            J+=1;
         }
-        I+1;
+        I+=1;
     }
 }
 
-void affichage_carte(int (*carte)[20], Entity *Personnage){
+void affichage_carte(char (*carte)[20], Entity *Personnage){
     int x = (*Personnage).X;
     int y = (*Personnage).Y;
     int j,i = 0;
     while(i < 20){
         j = 0;
         while(j < 20){
-            if(j == atoi(x) && i == atoi(y)){
+            if(j == x && i == y ){
                 printf("P");
             }else{
                 printf("%c",carte[i][j]);

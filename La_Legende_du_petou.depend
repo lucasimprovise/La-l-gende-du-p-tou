@@ -45,7 +45,7 @@
 	"struct.h"
 	"jeu.h"
 
-1583103258 source:c:\la-l-gende-du-p-tou\jeu.c
+1583108600 source:c:\la-l-gende-du-p-tou\jeu.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -54,7 +54,7 @@
 
 1583104181 c:\la-l-gende-du-p-tou\struct.h
 
-1583106329 c:\la-l-gende-du-p-tou\jeu.h
+1583108477 c:\la-l-gende-du-p-tou\jeu.h
 	"struct.h"
 
 1583096279 source:c:\la-l-gende-du-p-tou\main.c
