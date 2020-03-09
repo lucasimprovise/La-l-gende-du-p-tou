@@ -11,6 +11,7 @@ void Color(int couleurDuTexte,int couleurDeFond){ // fonction d'affichage de cou
 
 void menu_principal(){
     int iChoix;
+    int i;
     Color(15,2);
     printf("\tLancez le jeu en plein ecran afin d'eviter tout probleme d'affichage\n");
     Color(15,0);
@@ -40,6 +41,8 @@ void menu_principal(){
                 system("cls");
                 create_personnage(&Personnage);
                 printf("\nVous vous appelez, %s\n\n",Personnage.Nom);
+                texte_en_jeu(i=5);
+                system("pause");
                 game(&Personnage);
                 iChoix= 4;
                 break;
@@ -119,10 +122,35 @@ void create_personnage(Entity *Personnage){
 
 }
 
+void premier_choix(char *choix){
+    //printf('test');
+    printf("%s", choix);
+    switch(*choix){
+            case 'z':
+                printf("\nVous vous retrouvez dans une partie du bois un peu plus sombre remplis de junkie...");
+                system("pause");
+                printf("\nSoudain l'un d'entre eux vous attaque!");
+                break;
+            case 's':
+                break;
+            case 'q':
+                break;
+            case 'd' :
+                break;
+            default:
+                ;
+    }
+}
+
 void game(Entity *Personnage){
     char carte[20][20];
+    char input_premier_choix [2];
     create_carte(carte);
     affichage_carte(carte,&(*Personnage));
+    texte_en_jeu(6);
+    printf("\nOu souhaitez-vous aller?(z,q,s,d): ");
+    scanf("%s", input_premier_choix);
+    premier_choix(input_premier_choix);
 }
 
 void create_carte(char (*carte)[20]){
@@ -167,3 +195,30 @@ void affichage_carte(char (*carte)[20], Entity *Personnage){
     }
     printf("\n");
 }
+
+void texte_en_jeu(int i){
+    switch(i){
+    Entity Personnage;
+    case 5 : // Texte début de jeu
+        printf("\tVous vous reveillez au milieu de la foret cannabiasse apres avoir tire sur le join d`un type \n");
+        printf("\tbizarre au coin d`une rue, vous n`avez aucun souvenir de la maniere dont vous etes venus \n");
+        printf("\tici mais vous savez que vous etes dans la foret les feuilles des arbres sont des feuilles de \n");
+        printf("\tcannabis et vous sentez cette douce odeur de beuh tout autour de vous.\n");
+        printf("\n");
+        printf("\n");
+        printf("\tVous etes pret a partir a la recherche du petou legendaire.\n");
+        break;
+
+    case 6 : // Présentation premier pnj
+        printf("\nInconnu : Hola mon reuf, ça va? Comment tu t'es retrouve ici?\n");
+        printf("\nLolo : Moi c'est Lolo, bienvenue dans la forêt Canabiasse, toi c'est");
+        printf(Personnage.Nom);
+        printf("\nc'est ca?");
+        printf("\nJ'ai lu ca sur tes papiers d'identite tu m'en tiendra pas rigueur, t'es la pour chercher le petou legendaire ?\n");
+        printf("\nEt bien bonne chance mon ami, ta route sera remplis de periple car ce tresor est bien garde!");
+        printf("\nTiens je t'offre ce couteau pour que tu es de quoi te defendre contre tout ces tox dans la foret, bonne chance l'ami!");
+    }
+
+}
+
+

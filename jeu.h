@@ -8,5 +8,6 @@ void create_personnage(Entity *Personnage);
 void game(Entity *Personnage);
 void create_carte(char (*carte)[20]);
 void affichage_carte(char (*carte)[20], Entity *Personnage);
+void premier_choix(char *choix);
 
 #endif // JEU_H_INCLUDED

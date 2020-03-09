@@ -45,7 +45,7 @@
 	"struct.h"
 	"jeu.h"
 
-1583108600 source:c:\la-l-gende-du-p-tou\jeu.c
+1583264247 source:c:\la-l-gende-du-p-tou\jeu.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -58,6 +58,42 @@
 	"struct.h"
 
 1583096279 source:c:\la-l-gende-du-p-tou\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
+1583096279 source:c:\dev\c\la-l-gende-du-p-tou\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"jeu.h"
+
+1583754864 c:\dev\c\la-l-gende-du-p-tou\jeu.h
+	"struct.h"
+
+1583104181 c:\dev\c\la-l-gende-du-p-tou\struct.h
+
+1583756296 source:c:\dev\c\la-l-gende-du-p-tou\jeu.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"struct.h"
+	"jeu.h"
+
+1583756296 source:c:\dev\test\la-l-gende-du-p-tou\jeu.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"struct.h"
+	"jeu.h"
+
+1583104181 c:\dev\test\la-l-gende-du-p-tou\struct.h
+
+1583754864 c:\dev\test\la-l-gende-du-p-tou\jeu.h
+	"struct.h"
+
+1583096279 source:c:\dev\test\la-l-gende-du-p-tou\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
