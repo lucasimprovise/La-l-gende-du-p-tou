@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <time.h>
 #include "struct.h"
 #include "jeu.h"
 
@@ -241,3 +242,139 @@ void texte_en_jeu(int i, Personnage player){
 }
 
 
+int Attack(Personnage *p,Ennemy *e)
+{
+    srand(time(NULL));
+    int playerchoice = 0, combatFin = 0;
+
+
+	do
+    {
+
+        if (e->Pdv>0 && p->Pdv>0)
+        {
+            printf(" your choice \n\n");
+            printf("1. Attack \n");
+            printf("2. Object \n");
+            printf("3. Run \n");
+            scanf("%d",&playerchoice);
+            switch(playerchoice)
+            {
+                case 1:
+                    printf("choix 1\n");
+                    Attackplayer(p,e);
+                    if(e->Pdv>0)
+                    {
+                        Attackmonster(p,e);
+                    }
+                    break;
+                case 2:
+                    printf("choix 2\n");
+                    //Object();
+                    break;
+                case 3:
+                    printf("choix 3\n");
+                    game();
+                    break;
+                default:
+                    printf("Please choose a number between 1 and 3 \n");
+                    break;
+            }
+        }
+        else if (p->Pdv<=0)
+        {
+            printf("Le joueur est mort!!!");
+            combatFin = -1;
+            menu_principal();
+        }
+        else if (e->Pdv<=0)
+        {
+            printf("WIN!!!");
+            if (m->Pdv<=0)
+            {
+                p->xp += m->xp;
+                experience(p);
+            }
+            combatFin = 1;
+
+        }
+    }
+    while (playerchoice != 3 && combatFin ==0);
+
+return combatFin;
+}
+void Attackplayer(struct Personnage *p,struct Ennemy *e)
+{
+    int dgt=0,critique = Crit(),pvbase=e->Pdv;
+    switch(critique)
+    {
+        case 1:
+            printf("\n\n Attack normal player\n\n");
+            dgt = degatReduit(e->Pdef,p->Pda);
+            e->Pdv-=dgt;
+            break;
+        case 2:
+            printf("\n\n Double attack player\n\n");
+            dgt =degatReduit(e->Pdef,2*(p->Pda));
+            e->Pdv-=dgt;
+            break;
+        case 0:
+            printf("\n\n Miss attack player\n\n");
+            e->Pdv-=0;
+            break;
+}
+printf("le monstre avait:%d PV\nLe joueur a fait: %d degats \nIl reste au monstre: %d HP\n\n",pvbase,dgt,e->Pdv);
+}
+void Attackmonster(struct Personnage *p,struct Ennemy *e)
+{
+    int critique = Crit(), dgt=0, pvbase=p->Pdv;
+    switch(crit)
+    {
+        case 1:
+            printf("\n\n Attack normal monster\n\n");
+            dgt = degatReduit(p->Pdef,m->Pda);
+            p->Pdv-=dgt;
+            break;
+        case 2:
+            printf("\n\n Double attack monster\n\n");
+            dgt =degatReduit(p->Pdef,2*(e->Pda));
+            p->Pdv-=dgt;
+            break;
+        case 0:
+            printf("\n\n Miss attack monster\n\n");
+            p->Pdv-=0;
+            break;
+    }
+printf("le joueur avait:%d PV\nLe monstre a fait: %d degats \nIl reste au joueur: %d HP\n\n",pvbase,dgt,p->Pdv);
+}
+
+// retourne si critique ou échec:
+// 1 normal
+// 2 critique
+// 0 echec
+int critique(){
+	int attackmystery=((rand()%100));
+	printf("\n\nRandom number 10 to 100:%d\n\n",attackmystery);
+	if (attackmystery<=30)
+    {
+        return 0;
+    }
+    else if (attackmystery>30 && attackmystery<=60)
+    {
+        return 1;
+    }
+    else if (attackmystery>60)
+    {
+        return 2;
+    }
+
+return 1;
+}
+
+int degatReduit(int defense, int attack){
+    int resultat = attack - defense;
+    printf("\n\n Degat de base: %d , defense: %d , degat reduit: %d \n\n",attack,defense,attack -defense);
+    if(resultat<0)
+        return 0;
+return resultat;
+}
