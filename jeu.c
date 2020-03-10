@@ -36,14 +36,14 @@ void menu_principal(){
         printf("Fait ton choix mon reuf: ");
         scanf("%i", &iChoix);
         switch(iChoix){
-            Entity Personnage;
+            Personnage player;
             case 1:// Lancer le jeu
                 system("cls");
-                create_personnage(&Personnage);
-                printf("\nVous vous appelez, %s\n\n",Personnage.Nom);
-                texte_en_jeu(i=5);
+                init_player(&player);
+                printf("\nVous vous appelez, %s\n\n",player.Nom);
+                texte_en_jeu(5, player);
                 system("pause");
-                game(&Personnage);
+                game(&player);
                 iChoix= 4;
                 break;
             case 2: // Charger la sauvegarde
@@ -106,20 +106,33 @@ void menu_principal(){
     }while(iChoix != 4);
 }
 
-void create_personnage(Entity *Personnage){
+void init_player(Personnage *player){
     printf("Quel est votre nom : ");
-    scanf("%s",(*Personnage).Nom);
-    (*Personnage).Pdv = 15;
-    (*Personnage).Pda = 5;
-    (*Personnage).Pdef = 10;
-    (*Personnage).Crit = 3;
-    (*Personnage).E_Crit = (*Personnage).Crit+2;
-    (*Personnage).Niveau = 1;
-    (*Personnage).Exp = 0;
-    //(*Personnage).Equipement = [0,0,0,0,0];
-    (*Personnage).X = 10;
-    (*Personnage).Y = 10;
+    scanf("%s",(*player).Nom);
+    (*player).Pdv = 15;
+    (*player).Pda = 5;
+    (*player).Pdef = 10;
+    (*player).Crit = 3;
+    (*player).E_Crit = (*player).Crit+2;
+    (*player).Niveau = 1;
+    (*player).Exp = 0;
+    //(*player).Equipement = [0,0,0,0,0];
+    (*player).X = 10;
+    (*player).Y = 10;
 
+}
+
+void init_ennemy(Ennemy *ennemy){
+    (*ennemy).Pdv = 15;
+    (*ennemy).Pda = 5;
+    (*ennemy).Pdef = 10;
+    (*ennemy).Crit = 3;
+    (*ennemy).E_Crit = (*ennemy).Crit+2;
+    (*ennemy).Niveau = 1;
+    (*ennemy).Exp = 0;
+    //(*ennemy).Equipement = [0,0,0,0,0];
+    (*ennemy).X = 10;
+    (*ennemy).Y = 10;
 }
 
 void premier_choix(char *choix){
@@ -128,26 +141,33 @@ void premier_choix(char *choix){
     switch(*choix){
             case 'z':
                 printf("\nVous vous retrouvez dans une partie du bois un peu plus sombre remplis de junkie...");
+                printf("\n");
                 system("pause");
                 printf("\nSoudain l'un d'entre eux vous attaque!");
                 break;
             case 's':
+                printf("\nUne plaine remplis de tente s'étend devant vous.");
+                printf("\n Vous trouvez une potion dans l'une d'entre elle.");
                 break;
             case 'q':
+                printf("\nC'est quoi ce bordel encore, vous arrivez face a un trou et...");
+                printf("\nUne bande de footix vous attaques!");
                 break;
             case 'd' :
+                printf("\nVous trouvez un feu de camp dans la foret.");
+                printf("\nVous trouvez une potion en preparation sur le feu");
                 break;
             default:
                 ;
     }
 }
 
-void game(Entity *Personnage){
+void game(Personnage *player){
     char carte[20][20];
     char input_premier_choix [2];
     create_carte(carte);
-    affichage_carte(carte,&(*Personnage));
-    texte_en_jeu(6);
+    affichage_carte(carte,&(*player));
+    texte_en_jeu(6, *player);
     printf("\nOu souhaitez-vous aller?(z,q,s,d): ");
     scanf("%s", input_premier_choix);
     premier_choix(input_premier_choix);
@@ -175,9 +195,9 @@ void create_carte(char (*carte)[20]){
     }
 }
 
-void affichage_carte(char (*carte)[20], Entity *Personnage){
-    int x = (*Personnage).X;
-    int y = (*Personnage).Y;
+void affichage_carte(char (*carte)[20], Personnage *player){
+    int x = (*player).X;
+    int y = (*player).Y;
     int j,i = 0;
     while(i < 20){
         j = 0;
@@ -196,9 +216,8 @@ void affichage_carte(char (*carte)[20], Entity *Personnage){
     printf("\n");
 }
 
-void texte_en_jeu(int i){
+void texte_en_jeu(int i, Personnage player){
     switch(i){
-    Entity Personnage;
     case 5 : // Texte début de jeu
         printf("\tVous vous reveillez au milieu de la foret cannabiasse apres avoir tire sur le join d`un type \n");
         printf("\tbizarre au coin d`une rue, vous n`avez aucun souvenir de la maniere dont vous etes venus \n");
@@ -211,8 +230,8 @@ void texte_en_jeu(int i){
 
     case 6 : // Présentation premier pnj
         printf("\nInconnu : Hola mon reuf, ça va? Comment tu t'es retrouve ici?\n");
-        printf("\nLolo : Moi c'est Lolo, bienvenue dans la forêt Canabiasse, toi c'est");
-        printf(Personnage.Nom);
+        printf("\nLolo : Moi c'est Lolo, bienvenue dans la forêt Canabiasse, toi c'est ");
+        printf(player.Nom);
         printf("\nc'est ca?");
         printf("\nJ'ai lu ca sur tes papiers d'identite tu m'en tiendra pas rigueur, t'es la pour chercher le petou legendaire ?\n");
         printf("\nEt bien bonne chance mon ami, ta route sera remplis de periple car ce tresor est bien garde!");
