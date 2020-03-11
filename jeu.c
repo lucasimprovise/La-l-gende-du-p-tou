@@ -196,10 +196,7 @@ int Combat(Personnage *p,Ennemy *e)
         {
             printf("T'as juste ete le meilleur \n");
             if (e->Pdv<=0)
-           // {
-               // p->xp += e->xp;//
-              //  experience(p);
-          //  }//
+
             combatFin = 1;
 
         }
@@ -235,10 +232,6 @@ void TourEnnemy(Personnage *p,Ennemy *e)
 printf("le joueur avait:%d PV\nLe monstre a fait: %d degats \nIl reste au joueur: %d HP\n\n",pvbase,degat,p->Pdv);
 }
 
-// retourne si critique ou échec:
-// 1 normal
-// 2 critique
-// 0 echec
 int calc_crit(){
 	int randomiser=(rand()%100);
 	printf("\n\nOn tire dans le pochton un nombre entre  0 et 100:%d\n\n",randomiser);
