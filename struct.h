@@ -6,13 +6,12 @@ typedef struct{
     int Pdv;
     int Pda;
     int Pdef;
-    int Crit;
-    int E_Crit;
     int Niveau;
     int Exp;
     int Equipement[5];
     int X;
     int Y;
+    int popo;
 }Personnage;
 
 typedef struct{
@@ -20,8 +19,6 @@ typedef struct{
     int Pdv;
     int Pda;
     int Pdef;
-    int Crit;
-    int E_Crit;
     int Niveau;
     int Exp;
     int Equipement[5];

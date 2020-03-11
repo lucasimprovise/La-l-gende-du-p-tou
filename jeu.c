@@ -5,6 +5,7 @@
 #include "struct.h"
 #include "jeu.h"
 
+
 void Color(int couleurDuTexte,int couleurDeFond){ // fonction d'affichage de couleurs
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H,couleurDeFond*16+couleurDuTexte);
@@ -41,8 +42,9 @@ void menu_principal(){
             case 1:// Lancer le jeu
                 system("cls");
                 init_player(&player);
+                printf("INIT PLAYER STATS %i %i %i", player.Pda, player.Pdef, player.Pdv);
                 printf("\nVous vous appelez, %s\n\n",player.Nom);
-                texte_en_jeu(5, player);
+                texte_en_jeu(5, &player);
                 system("pause");
                 game(&player);
                 iChoix= 4;
@@ -113,188 +115,95 @@ void init_player(Personnage *player){
     (*player).Pdv = 15;
     (*player).Pda = 5;
     (*player).Pdef = 10;
-    (*player).Crit = 3;
-    (*player).E_Crit = (*player).Crit+2;
     (*player).Niveau = 1;
     (*player).Exp = 0;
     //(*player).Equipement = [0,0,0,0,0];
     (*player).X = 10;
     (*player).Y = 10;
+    (*player).popo = 0;
 
 }
 
-void init_ennemy(Ennemy *ennemy){
-    (*ennemy).Pdv = 15;
-    (*ennemy).Pda = 5;
-    (*ennemy).Pdef = 10;
-    (*ennemy).Crit = 3;
-    (*ennemy).E_Crit = (*ennemy).Crit+2;
-    (*ennemy).Niveau = 1;
-    (*ennemy).Exp = 0;
-    //(*ennemy).Equipement = [0,0,0,0,0];
-    (*ennemy).X = 10;
-    (*ennemy).Y = 10;
-}
-
-void premier_choix(char *choix){
-    //printf('test');
-    printf("%s", choix);
-    switch(*choix){
-            case 'z':
-                printf("\nVous vous retrouvez dans une partie du bois un peu plus sombre remplis de junkie...");
-                printf("\n");
-                system("pause");
-                printf("\nSoudain l'un d'entre eux vous attaque!");
-                break;
-            case 's':
-                printf("\nUne plaine remplis de tente s'étend devant vous.");
-                printf("\n Vous trouvez une potion dans l'une d'entre elle.");
-                break;
-            case 'q':
-                printf("\nC'est quoi ce bordel encore, vous arrivez face a un trou et...");
-                printf("\nUne bande de footix vous attaques!");
-                break;
-            case 'd' :
-                printf("\nVous trouvez un feu de camp dans la foret.");
-                printf("\nVous trouvez une potion en preparation sur le feu");
-                break;
-            default:
-                ;
+void TourJoueur(Personnage *p, Ennemy *e)
+{
+    int dgt=0;
+    int critique = calc_crit();
+    printf("pda enemy %d", e->Pda);
+    printf("pdv player %d", p->Pdv);
+    printf("pda player %d", p->Pda);
+    int pvbase=e->Pdv;
+    switch(critique)
+    {
+        case 1:
+            printf("\n\n MAWASHIGIRI\n\n");
+            dgt = degatReduit(e->Pdef,p->Pda);
+            printf("%d", dgt);
+            e->Pdv-=dgt;
+            break;
+        case 2:
+            printf("\n\n GIGA COUP DE ZBREH \n\n");
+            dgt =degatReduit(e->Pdef,2*(p->Pda));
+            e->Pdv-=dgt;
+            break;
+        case 0:
+            printf("\n\n T'as tapé à côté mon roh\n\n");
+            break;
+        default:
+            printf("ERROR");
     }
+printf("Le con avait:%d PV\nOn lui a mis: %d degats \nIl reste a l'ennemie: %d PDV\n\n",pvbase,dgt,e->Pdv);
 }
 
-void game(Personnage *player){
-    char carte[20][20];
-    char input_premier_choix [2];
-    create_carte(carte);
-    affichage_carte(carte,&(*player));
-    texte_en_jeu(6, *player);
-    printf("\nOu souhaitez-vous aller?(z,q,s,d): ");
-    scanf("%s", input_premier_choix);
-    premier_choix(input_premier_choix);
-}
-
-void create_carte(char (*carte)[20]){
-    int J,I = 0;
-    while(I<20){
-        J=0;
-        while(J<20){
-            if(I==0){
-                carte[I][J]='0';
-            }else if(I==20-1){
-                carte[I][J]='0';
-            }else if(J==0){
-                carte[I][J]='0';
-            }else if(J==20-1){
-                carte[I][J]='0';
-            }else{
-                carte[I][J]=' ';
-            }
-            J+=1;
-        }
-        I+=1;
-    }
-}
-
-void affichage_carte(char (*carte)[20], Personnage *player){
-    int x = (*player).X;
-    int y = (*player).Y;
-    int j,i = 0;
-    while(i < 20){
-        j = 0;
-        while(j < 20){
-            if(j == x && i == y ){
-                printf("P");
-            }else{
-                printf("%c",carte[i][j]);
-            }
-            printf(" ");
-            j+=1;
-        }
-        printf("\n");
-        i+=1;
-    }
-    printf("\n");
-}
-
-void texte_en_jeu(int i, Personnage player){
-    switch(i){
-    case 5 : // Texte début de jeu
-        printf("\tVous vous reveillez au milieu de la foret cannabiasse apres avoir tire sur le join d`un type \n");
-        printf("\tbizarre au coin d`une rue, vous n`avez aucun souvenir de la maniere dont vous etes venus \n");
-        printf("\tici mais vous savez que vous etes dans la foret les feuilles des arbres sont des feuilles de \n");
-        printf("\tcannabis et vous sentez cette douce odeur de beuh tout autour de vous.\n");
-        printf("\n");
-        printf("\n");
-        printf("\tVous etes pret a partir a la recherche du petou legendaire.\n");
-        break;
-
-    case 6 : // Présentation premier pnj
-        printf("\nInconnu : Hola mon reuf, ça va? Comment tu t'es retrouve ici?\n");
-        printf("\nLolo : Moi c'est Lolo, bienvenue dans la forêt Canabiasse, toi c'est ");
-        printf(player.Nom);
-        printf("\nc'est ca?");
-        printf("\nJ'ai lu ca sur tes papiers d'identite tu m'en tiendra pas rigueur, t'es la pour chercher le petou legendaire ?\n");
-        printf("\nEt bien bonne chance mon ami, ta route sera remplis de periple car ce tresor est bien garde!");
-        printf("\nTiens je t'offre ce couteau pour que tu es de quoi te defendre contre tout ces tox dans la foret, bonne chance l'ami!");
-    }
-
-}
-
-
-int Attack(Personnage *p,Ennemy *e)
+int Combat(Personnage *p,Ennemy *e)
 {
     srand(time(NULL));
     int playerchoice = 0, combatFin = 0;
-
 
 	do
     {
 
         if (e->Pdv>0 && p->Pdv>0)
         {
-            printf(" your choice \n\n");
-            printf("1. Attack \n");
-            printf("2. Object \n");
-            printf("3. Run \n");
+            printf(" Fait ton choix \n\n");
+            printf("1. Attaque \n");
+            printf("2. Sac à dos \n");
+            printf("3. Cavale \n");
             scanf("%d",&playerchoice);
             switch(playerchoice)
             {
                 case 1:
-                    printf("choix 1\n");
-                    Attackplayer(p,e);
+                    printf("ZBRAH \n");
+                    TourJoueur(p,e);
                     if(e->Pdv>0)
                     {
-                        Attackmonster(p,e);
+                        TourEnnemy(&p,&e);
                     }
                     break;
                 case 2:
-                    printf("choix 2\n");
-                    //Object();
+                    printf("Une popo? 2\n");
+                    //Trouver comment stocker un objet pour remplir cette section
                     break;
                 case 3:
-                    printf("choix 3\n");
-                    game();
+                    printf("Cours plus vite chakal ! \n");
                     break;
                 default:
-                    printf("Please choose a number between 1 and 3 \n");
-                    break;
+                    printf("J'veux bien que tu sois paniqué mais faut choisir entre 1 et 3 \n");
             }
         }
         else if (p->Pdv<=0)
         {
-            printf("Le joueur est mort!!!");
+            printf("Fiou comment il a dead ça chakal! \n");
             combatFin = -1;
             menu_principal();
         }
         else if (e->Pdv<=0)
         {
-            printf("WIN!!!");
-            if (m->Pdv<=0)
-            {
-                p->xp += m->xp;
-                experience(p);
-            }
+            printf("T'as juste ete le meilleur \n");
+            if (e->Pdv<=0)
+           // {
+               // p->xp += e->xp;//
+              //  experience(p);
+          //  }//
             combatFin = 1;
 
         }
@@ -303,58 +212,40 @@ int Attack(Personnage *p,Ennemy *e)
 
 return combatFin;
 }
-void Attackplayer(struct Personnage *p,struct Ennemy *e)
+
+void TourEnnemy(Personnage *p,Ennemy *e)
 {
-    int dgt=0,critique = Crit(),pvbase=e->Pdv;
+    int critique = calc_crit();
+    int degat=0;
+    int pvbase=p->Pdv;
+    printf("player pdv %d", p->Pdv);
     switch(critique)
     {
         case 1:
-            printf("\n\n Attack normal player\n\n");
-            dgt = degatReduit(e->Pdef,p->Pda);
-            e->Pdv-=dgt;
+            printf("\n\n AKRA\n\n");
+            degat = degatReduit(p->Pdef,e->Pda);
+            p->Pdv-=degat;
             break;
         case 2:
-            printf("\n\n Double attack player\n\n");
-            dgt =degatReduit(e->Pdef,2*(p->Pda));
-            e->Pdv-=dgt;
+            printf("\n\n Double AKRA\n\n");
+            degat =degatReduit(p->Pdef,2*(e->Pda));
+            p->Pdv-=degat;
             break;
         case 0:
-            printf("\n\n Miss attack player\n\n");
-            e->Pdv-=0;
-            break;
-}
-printf("le monstre avait:%d PV\nLe joueur a fait: %d degats \nIl reste au monstre: %d HP\n\n",pvbase,dgt,e->Pdv);
-}
-void Attackmonster(struct Personnage *p,struct Ennemy *e)
-{
-    int critique = Crit(), dgt=0, pvbase=p->Pdv;
-    switch(crit)
-    {
-        case 1:
-            printf("\n\n Attack normal monster\n\n");
-            dgt = degatReduit(p->Pdef,m->Pda);
-            p->Pdv-=dgt;
-            break;
-        case 2:
-            printf("\n\n Double attack monster\n\n");
-            dgt =degatReduit(p->Pdef,2*(e->Pda));
-            p->Pdv-=dgt;
-            break;
-        case 0:
-            printf("\n\n Miss attack monster\n\n");
+            printf("\n\n Il a glissé\n\n");
             p->Pdv-=0;
             break;
     }
-printf("le joueur avait:%d PV\nLe monstre a fait: %d degats \nIl reste au joueur: %d HP\n\n",pvbase,dgt,p->Pdv);
+printf("le joueur avait:%d PV\nLe monstre a fait: %d degats \nIl reste au joueur: %d HP\n\n",pvbase,degat,p->Pdv);
 }
 
 // retourne si critique ou échec:
 // 1 normal
 // 2 critique
 // 0 echec
-int critique(){
-	int attackmystery=((rand()%100));
-	printf("\n\nRandom number 10 to 100:%d\n\n",attackmystery);
+int calc_crit(){
+	int attackmystery=(rand()%100);
+	printf("\n\nOn tire dans le pochton un nombre entre  0 et 100:%d\n\n",attackmystery);
 	if (attackmystery<=30)
     {
         return 0;
@@ -374,7 +265,130 @@ return 1;
 int degatReduit(int defense, int attack){
     int resultat = attack - defense;
     printf("\n\n Degat de base: %d , defense: %d , degat reduit: %d \n\n",attack,defense,attack -defense);
-    if(resultat<0)
+    if(resultat<0){
         return 0;
-return resultat;
+    }
+    return resultat;
+}
+
+
+void init_ennemy(Ennemy *ennemy){
+    (*ennemy).Pdv = 7;
+    (*ennemy).Pda = 5;
+    (*ennemy).Pdef = 5;
+    (*ennemy).Niveau = 1;
+    (*ennemy).Exp = 0;
+    //(*ennemy).Equipement = [0,0,0,0,0];
+    (*ennemy).X = 10;
+    (*ennemy).Y = 10;
+}
+
+void game(Personnage *player){
+    char carte[20][20];
+    char input_premier_choix[1];
+//    create_carte(carte);
+//    affichage_carte(carte,&(*player));
+    texte_en_jeu(6, &player);
+    printf("\nOu souhaitez-vous aller?(z,q,s,d): ");
+    scanf("%s", input_premier_choix);
+    premier_choix(&player, input_premier_choix);
+}
+
+//void create_carte(char (*carte)[20]){
+  //  int J,I = 0;
+   // while(I<20){
+     //   J=0;
+     //   while(J<20){
+          //  if(I==0){
+           //     carte[I][J]='0';
+          //  }else if(I==20-1){
+           //     carte[I][J]='0';
+          //  }else if(J==0){
+          //      carte[I][J]='0';
+         //   }else if(J==20-1){
+         //       carte[I][J]='0';
+         //   }else{
+          //      carte[I][J]=' ';
+         //   }
+         //   J+=1;
+       // }
+     //   I+=1
+   // }
+//
+
+//void affichage_carte(char (*carte)[20], Personnage *player){
+  //  int x = (*player).X;
+  //  int y = (*player).Y;
+    //int j,i = 0;
+    //while(i < 20){
+      //  j = 0;
+        //while(j < 20){
+          //  if(j == x && i == y ){
+            //    printf("P");
+            //}else{
+             //   printf("%c",carte[i][j]);
+            //}
+           // printf(" ");
+           // j+=1;
+        //}
+        //printf("\n");
+        //i+=1;
+   // }
+   // printf("\n");
+//}
+
+void texte_en_jeu(int i, Personnage *player){
+    switch(i){
+    case 5 : // Texte début de jeu
+        printf("\tVous vous reveillez au milieu de la foret cannabiasse apres avoir tire sur le join d`un type \n");
+        printf("\tbizarre au coin d`une rue, vous n`avez aucun souvenir de la maniere dont vous etes venus \n");
+        printf("\tici mais vous savez que vous etes dans la foret les feuilles des arbres sont des feuilles de \n");
+        printf("\tcannabis et vous sentez cette douce odeur de beuh tout autour de vous.\n");
+        printf("\n");
+        printf("\n");
+        printf("\tVous etes pret a partir a la recherche du petou legendaire.\n");
+        break;
+
+    case 6 : // Présentation premier pnj
+        printf("\nInconnu : Hola mon reuf, ça va? Comment tu t'es retrouve ici?\n");
+        printf("\nLolo : Moi c'est Lolo, bienvenue dans la forêt Canabiasse, toi c'est ");
+        printf(player->Nom);
+        printf("\nc'est ca?");
+        printf("\nJ'ai lu ca sur tes papiers d'identite tu m'en tiendra pas rigueur, t'es la pour chercher le petou legendaire ?\n");
+        printf("\nEt bien bonne chance mon ami, ta route sera remplis de periple car ce tresor est bien garde!");
+        printf("\nTiens je t'offre ce couteau pour que tu es de quoi te defendre contre tout ces tox dans la foret, bonne chance l'ami!");
+    }
+
+}
+
+void premier_choix(Personnage *player, char *choix){
+    //printf('test');
+    printf("%s", choix);
+    switch(*choix){
+        Ennemy junkie;
+            case 'z':
+                init_ennemy(&junkie);
+                printf("\nVous vous retrouvez dans une partie du bois un peu plus sombre remplis de junkie...");
+                printf("\n");
+                system("pause");
+                printf("\nSoudain l'un d'entre eux vous attaque!");
+                Combat(&player,&junkie);
+                break;
+            case 's':
+                printf("\nUne plaine remplis de tente s'étend devant vous.");
+                printf("\n Vous trouvez une potion dans l'une d'entre elle.");
+                (*player).popo+=1;
+                printf("popo %d", (*player).popo);
+                break;
+            case 'q':
+                printf("\nC'est quoi ce bordel encore, vous arrivez face a un trou et...");
+                printf("\nUne bande de footix vous attaques!");
+                break;
+            case 'd' :
+                printf("\nVous trouvez un feu de camp dans la foret.");
+                printf("\nVous trouvez une potion en preparation sur le feu");
+                break;
+            default:
+                return;
+    }
 }

@@ -8,6 +8,8 @@ void init_player(Personnage *player);
 void game(Personnage *player);
 void create_carte(char (*carte)[20]);
 void affichage_carte(char (*carte)[20], Personnage *player);
-void premier_choix(char *choix);
-
+void premier_choix(Personnage *player, char *choix);
+void TourJoueur(Personnage *p, Ennemy *e);
+void TourEnnemy(Personnage *p,Ennemy *e);
+void texte_en_jeu(int i, Personnage *player);
 #endif // JEU_H_INCLUDED

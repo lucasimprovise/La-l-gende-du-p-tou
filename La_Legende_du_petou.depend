@@ -81,19 +81,20 @@
 	"struct.h"
 	"jeu.h"
 
-1583833762 source:c:\dev\test\la-l-gende-du-p-tou\jeu.c
+1583923532 source:c:\dev\test\la-l-gende-du-p-tou\jeu.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
+	<time.h>
 	"struct.h"
 	"jeu.h"
 
-1583830507 c:\dev\test\la-l-gende-du-p-tou\struct.h
+1583923789 c:\dev\test\la-l-gende-du-p-tou\struct.h
 
-1583833544 c:\dev\test\la-l-gende-du-p-tou\jeu.h
+1583923649 c:\dev\test\la-l-gende-du-p-tou\jeu.h
 	"struct.h"
 
-1583096279 source:c:\dev\test\la-l-gende-du-p-tou\main.c
+1583845247 source:c:\dev\test\la-l-gende-du-p-tou\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
